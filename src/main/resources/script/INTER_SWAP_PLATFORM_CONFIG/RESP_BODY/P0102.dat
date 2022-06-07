@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet version="2.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:xalan="http://xml.apache.org/xalan">
+  <xsl:output method="xml" version="1.0" encoding="gb2312"
+      indent="no" />
+  <xsl:strip-space elements="*" />
+  <xsl:template match="/">
+
+    <xsl:variable name="busiOrdId" select="//smParamNode[@id='OrdShipBaseInfo']//smParamNode[@key='busiOrdId']/@value"/>
+    <xsl:variable name="ship_id" select="//smParamNode[@id='OrdShipBaseInfo']//smParamNode[@key='ship_id']/@value"/>
+    <xsl:variable name="ship_name_chn" select="//smParamNode[@id='OrdShipBaseInfo']//smParamNode[@key='shipNameChn']/@value"/>
+    <xsl:variable name="homeports" select="//smParamNode[@id='OrdShipBaseInfo']//smParamNode[@key='homeports']/@value"/>
+    <xsl:variable name="ship_type" select="//smParamNode[@id='OrdShipBaseInfo']//smParamNode[@key='shipType']/@value"/>
+    <xsl:variable name="imo_no" select="//smParamNode[@id='OrdShipBaseInfo']//smParamNode[@key='imoNo']/@value"/>
+    <xsl:variable name="build_date" select="//smParamNode[@id='OrdShipBaseInfo']//smParamNode[@key='buildDate']/@value"/>
+    
+    <xsl:variable name="certificate_no" select="//smParamNode[@id='OrdCertificate']//smParamNode[@key='certificateNo']/@value"/>
+    <xsl:variable name="exp_date" select="//smParamNode[@id='OrdCertificate']//smParamNode[@key='expDate']/@value"/>
+    <xsl:variable name="entNameChn" select="//smParamNode[@id='OrdCertificate']//smParamNode[@key='entNameChn']/@value"/>
+    <xsl:variable name="service_type" select="//smParamNode[@id='OrdCertificate']//smParamNode[@key='serviceType']/@value"/>
+
+    <xsl:variable name="ship_mgr_name" select="//smParamNode[@id='OrdShipManagerInfo']//smParamNode[@value='1']/following-sibling::*/@value"/>
+    <xsl:variable name="ship_mgr_name_1" select="//smParamNode[@id='OrdShipManagerInfo']//smParamNode[@value='2']/following-sibling::*/@value"/>
+
+    <xsl:variable name="load_dwt_amount" select="//smParamNode[@id='OrdShipParamInfo']//smParamNode[@key='loadDwtAmount']/@value"/>
+    <xsl:variable name="net_tonnage" select="//smParamNode[@id='OrdShipParamInfo']//smParamNode[@key='netTonnage']/@value"/>
+    <xsl:variable name="load_dwt" select="//smParamNode[@id='OrdShipParamInfo']//smParamNode[@key='loadDwt']/@value"/>
+    <xsl:variable name="load_passenger" select="//smParamNode[@id='OrdShipParamInfo']//smParamNode[@key='loadPassenger']/@value"/>
+    <xsl:variable name="load_teu" select="//smParamNode[@id='OrdShipParamInfo']//smParamNode[@key='loadTeu']/@value"/>
+
+    <xsl:variable name="ship_scop_ent" select="//smParamNode[@id='OrdCertiShip']//smParamNode[@key='shipScopEnt']/@value"/>
+    <xsl:variable name="biz_scope_self" select="//smParamNode[@id='OrdCertiShip']//smParamNode[@key='bizScopeSelf']/@value"/>
+    <xsl:variable name="biz_route" select="//smParamNode[@id='OrdCertiShip']//smParamNode[@key='bizRoute']/@value"/>
+
+    <xsl:variable name="done_date" select="//smParamNode[@id='OrdWorkOrder']//smParamNode[@key='doneDate']/@value"/>
+
+    <xsl:variable name="build_address" select="//smParamNode[@id='SmParamDetail'][2]"/>
+    <xsl:variable name="ship_class" select="//smParamNode[@id='SmParamDetail'][1]"/>
+
+    <respInfo>
+      <resultconunt>1</resultconunt>
+      <shipBaseInfoQueryForPortalresp>
+        <ship_name_chn>
+          <xsl:value-of select="$ship_name_chn" />
+        </ship_name_chn>
+        <homeports>
+          <xsl:value-of select="$homeports" />
+        </homeports>
+        <ship_mgr_name>
+          <xsl:value-of select="$ship_mgr_name" />
+        </ship_mgr_name>
+
+        <ship_mgr_name_1>
+          <xsl:value-of select="$entNameChn" />
+        </ship_mgr_name_1>
+          
+        <ship_type>
+          <xsl:value-of select="$ship_type" />
+        </ship_type>
+        <imo_no>
+          <xsl:value-of select="$imo_no" />
+        </imo_no>
+        <load_dwt_amount>
+          <xsl:value-of select="$load_dwt_amount" />
+        </load_dwt_amount>
+        <net_tonnage>
+          <xsl:value-of select="$net_tonnage" />
+        </net_tonnage>
+        <load_dwt>
+          <xsl:value-of select="$load_dwt" />
+        </load_dwt>
+        <load_passenger>
+          <xsl:value-of select="$load_passenger" />
+        </load_passenger>
+        <load_teu>
+          <xsl:value-of select="$load_teu" />
+        </load_teu>
+        <build_date>
+          <xsl:value-of select="$build_date" />
+        </build_date>
+        <build_address>
+          <xsl:value-of select="$build_address//smParamNode[@key='typeParamDesc']/@value" />
+        </build_address>
+        <ship_class>
+          <xsl:value-of select="$ship_class//smParamNode[@key='typeParamDesc']/@value" />
+        </ship_class>
+
+        <xsl:choose>
+          <xsl:when test="$service_type = '1'">
+            <ship_biz_scope>
+              <xsl:value-of select=" concat($ship_scop_ent,';',$biz_scope_self)" /> 
+            </ship_biz_scope>
+          </xsl:when>
+          <xsl:when test="$service_type = '2'">
+            <ship_biz_scope>
+              <xsl:value-of select="$ship_scop_ent" />
+            </ship_biz_scope>
+          </xsl:when>
+          <xsl:otherwise>
+            <ship_biz_scope>
+              <xsl:value-of select="$biz_route" />
+            </ship_biz_scope>
+          </xsl:otherwise>
+        </xsl:choose>
+
+        <certificate_no>
+          <xsl:value-of select="$certificate_no" />
+        </certificate_no>
+        
+        <done_date>
+          <xsl:value-of select="$done_date" />
+        </done_date>
+        
+        <exp_date>
+          <xsl:value-of select="$exp_date" />
+        </exp_date>
+
+      </shipBaseInfoQueryForPortalresp>
+      
+    </respInfo>
+  </xsl:template>
+</xsl:stylesheet>

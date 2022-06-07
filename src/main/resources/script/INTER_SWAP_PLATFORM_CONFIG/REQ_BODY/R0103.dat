@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet version="2.0"
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+   xmlns:fn="http://www.w3.org/2005/xpath-functions"
+   xmlns:xalan="http://xml.apache.org/xalan">
+  <xsl:output method="xml" version="1.0" encoding="gb2312" indent="no"/>
+  <xsl:strip-space elements="*"/>
+  <xsl:template match="/">
+    <xsl:variable name="issueOrg" select="//issueOrg[text()]"/>
+    <xsl:variable name="entApanage" select="//entApanage[text()]"/>
+    <xsl:variable name="shipType" select="//shipType[text()]"/>
+    <xsl:variable name="bookId" select="//bookId[text()]"/>
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.approval.wtms.cttic.cn/">
+      <soapenv:Header/>
+      <soapenv:Body>
+        <ws:BuildCertiNoCommand>
+          <!--Optional:-->
+          <BuildCertiNoReq>
+            <isbase64>true</isbase64>
+            <!--Optional:-->
+            <json_object></json_object>
+            <maxJsonObjlen></maxJsonObjlen>
+            <!--Optional:-->
+            <issueOrg>
+              <xsl:value-of select="$issueOrg"/>
+            </issueOrg>
+            <!--Optional:-->
+            <entApanage>
+              <xsl:value-of select="$entApanage"/>
+            </entApanage>
+            <!--Optional:-->
+            <shipType>
+              <xsl:value-of select="$shipType"/>
+            </shipType>
+            <!--Optional:-->
+            <bookId>
+              <xsl:value-of select="$bookId"/>
+            </bookId>
+          </BuildCertiNoReq>
+        </ws:BuildCertiNoCommand>
+      </soapenv:Body>
+    </soapenv:Envelope>
+  </xsl:template>
+</xsl:stylesheet>

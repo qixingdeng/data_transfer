@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<weblogic-web-app xmlns="http://www.bea.com/ns/weblogic/weblogic-web-app"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xsi:schemaLocation="http://www.bea.com/ns/weblogic/weblogic-web-app http://www.bea.com/ns/weblogic/weblogic-web-app/1.0/weblogic-web-app.xsd"> 
+	<!-- 追加JSESSIONID会导致CAS认证失败 does not match supplied service
+	<session-descriptor>
+		<cookie-name>JSESSIONID-APPROVAL</cookie-name>
+	</session-descriptor> -->
+	<!--提示即使weblogic即使有这个包也要优先使用下面路径的内容-->  
+	<container-descriptor>
+		<prefer-web-inf-classes>false</prefer-web-inf-classes>
+		<prefer-application-packages>
+			<package-name>javax.wsdl.*</package-name>
+			<package-name>com.ctc.wstx.*</package-name>
+			<package-name>org.apache.xerces.*</package-name>
+			<package-name>org.apache.xalan.*</package-name>
+		</prefer-application-packages>
+	</container-descriptor>
+</weblogic-web-app>

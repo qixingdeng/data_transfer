@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet version="2.0"
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+   xmlns:fn="http://www.w3.org/2005/xpath-functions"
+   xmlns:xalan="http://xml.apache.org/xalan">
+  <xsl:output method="xml" version="1.0" encoding="gb2312" indent="no"/>
+  <xsl:strip-space elements="*"/>
+  <xsl:template match="/">
+    <xsl:variable name="vin" select="//smParamNode[@key = 'vin']/@value"/>
+    <xsl:variable name="color" select="//smParamNode[@key = 'color']/@value"/>
+    <xsl:variable name="day" select="//smParamNode[@key = 'day']/@value"/>
+    <xsl:variable name="begin_time" select="//smParamNode[@key = 'begin_time']/@value"/>
+    <xsl:variable name="end_time" select="//smParamNode[@key = 'end_time']/@value"/>
+    <selectParamRoot>
+       <column>
+        <column>accesscode</column>
+        <column>trans_type</column>
+        <column>vin</column>
+        <column>color</column>
+        <column>cur_accesscode</column>
+        <column>lon</column>
+        <column>lat</column>
+        <column>warn</column>
+        <column>state</column>
+        <column>elevation</column>
+        <column>od_rate</column>
+        <column>locator_rate</column>
+        <column>mileage</column>
+        <column>direction</column>
+        <column>position_time</column>
+        <column>recv_time</column>
+      </column>
+      <xsl:if test="$vin!=''">
+        <wheres>
+          <funcName>andVinEqualTo</funcName>
+          <paramList>
+            <xsl:value-of select="$vin"/>
+          </paramList>
+        </wheres>
+      </xsl:if>
+      <xsl:if test="$color != ''">
+        <wheres>
+          <funcName>andColorEqualTo</funcName>
+          <paramList>
+            <xsl:value-of select="$color"/>
+          </paramList>
+        </wheres>
+      </xsl:if>
+      <wheres>
+          <funcName>andPositionTimeBetween</funcName>
+          <paramList>
+            <xsl:value-of select="$day"/> <xsl:text> </xsl:text><xsl:value-of select="$begin_time"/>
+          </paramList>
+          <paramList>
+            <xsl:value-of select="$day"/> <xsl:text> </xsl:text>  <xsl:value-of select="$end_time"/>
+          </paramList>
+        </wheres>
+      <mappername>BdVehicleLineGnssLog</mappername>
+      <tablename>BD_VEHICLE_LINE_GNSS_LOG</tablename>
+    </selectParamRoot>
+  </xsl:template>
+</xsl:stylesheet>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet version="2.0"
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+   xmlns:fn="http://www.w3.org/2005/xpath-functions"
+   xmlns:xalan="http://xml.apache.org/xalan">
+  <xsl:output method="xml" version="1.0" encoding="gb2312" indent="no"/>
+  <xsl:strip-space elements="*"/>
+  <xsl:template match="/">
+    <xsl:variable name="busiOrdId" select="//busiOrdId[text()]"/>
+    <xsl:variable name="shipId" select="//shipId[text()]"/>
+    <selectParamRoot>
+       <column>
+        <column>busiOrdId</column>
+        <column>shipId</column>
+        <column>shipNameChn</column>
+        <column>homeports</column>
+        <column>shipType</column>
+        <column>imoNo</column>
+        <column>buildDate</column>
+        <column>buildAddress</column>
+        <column>shipClass</column>
+      </column>
+      <xsl:if test="$busiOrdId!=''">
+        <wheres>
+          <funcName>andBusiOrdIdIsNotNull</funcName>
+        </wheres>
+        <wheres>
+          <funcName>andBusiOrdIdEqualTo</funcName>
+          <paramList>
+            <xsl:value-of select="$busiOrdId"/>
+          </paramList>
+        </wheres>
+      </xsl:if>
+      <xsl:if test="$shipId!=''">
+        <wheres>
+          <funcName>andShipIdIsNotNull</funcName>
+        </wheres>
+        <wheres>
+          <funcName>andShipIdEqualTo</funcName>
+          <paramList>
+            <xsl:value-of select="$shipId"/>
+          </paramList>
+        </wheres>
+      </xsl:if>
+  
+      <mappername>OrdShipBaseInfo</mappername>
+      <tablename>ORD_SHIP_BASE_INFO</tablename>
+      
+    </selectParamRoot>
+  </xsl:template>
+</xsl:stylesheet>

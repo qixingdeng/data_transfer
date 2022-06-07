@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet version="2.0"
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+   xmlns:fn="http://www.w3.org/2005/xpath-functions"
+   xmlns:xalan="http://xml.apache.org/xalan">
+  <xsl:output method="text"  version="1.0" encoding="gb2312" indent="no"/>
+  <xsl:strip-space elements="*"/>
+  <xsl:template match="/">
+    <xsl:variable name="serviceName" select="//smParamNode[@key = 'serviceName']/@value"/>
+    <xsl:variable name="servicePword" select="//smParamNode[@key = 'servicePword']/@value"/>
+    <xsl:variable name="systemDesc" select="//smParamNode[@key = 'systemDesc']/@value"/>
+    serviceName=<xsl:value-of select="$serviceName"/>,servicePword=<xsl:value-of select="$servicePword"/>,systemDesc=<xsl:value-of select="$systemDesc"/>
+  </xsl:template>
+</xsl:stylesheet>

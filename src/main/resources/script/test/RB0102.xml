@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<reqInfo>
+	<busicode>B0102</busicode>
+	<provinceCode>320000</provinceCode>
+	<ownerId>901112291634170341</ownerId>
+	<mcuId>901112291637185049</mcuId>
+	<vehicleNo>苏JC3715</vehicleNo>
+	<transCertificateWord>盐</transCertificateWord>
+	<transCertificateCode>03307839</transCertificateCode>
+	<transCertificateGrantOrgan>盐都县运输管理处</transCertificateGrantOrgan>
+	<certificateBeginDate>20111229</certificateBeginDate>
+	<certificateExpireDate>20151229</certificateExpireDate>
+	<businessScopeCode>02101</businessScopeCode>
+	<businessScopeDesc>1</businessScopeDesc>
+	<certificateType>1</certificateType>
+	<plateColor>黄</plateColor>
+	<platecolorcode>2</platecolorcode>
+	<operTime>20150422101212</operTime>
+	<operType>1</operType>
+</reqInfo>

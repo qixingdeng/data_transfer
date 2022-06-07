@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet version="2.0"
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+   xmlns:fn="http://www.w3.org/2005/xpath-functions"
+   xmlns:xalan="http://xml.apache.org/xalan">
+  <xsl:output method="xml" version="1.0" encoding="gb2312" indent="no"/>
+  <xsl:strip-space elements="*"/>
+  <xsl:template match="/">
+     <xsl:variable name="busiOrdId" select="//smParamNode[@id='OrdShipBaseInfo']/smParamNode/smParamNode[@key='busiOrdId']/@value"/>
+    <xsl:param name="infoId"/>
+    <selectParamRoot>
+       <column>
+        <column>shipScopEnt</column>
+        <column>bizScopeSelf</column>
+        <column>bizRoute</column>
+      </column>
+       <wheres>
+          <funcName>andBusiOrdIdIsNotNull</funcName>
+        </wheres>
+        <wheres>
+          <funcName>andBusiOrdIdEqualTo</funcName>
+          <paramList>
+            <xsl:value-of select="$busiOrdId"/>
+          </paramList>
+        </wheres>
+        <wheres>
+          <funcName>andInfoIdIsNotNull</funcName>
+        </wheres>
+        <wheres>
+          <funcName>andInfoIdEqualTo</funcName>
+          <paramList>
+            <xsl:value-of select="$infoId"/>
+          </paramList>
+        </wheres>
+      
+      <wheres>
+          <funcName>andOperTypeEqualTo</funcName>
+          <paramList>1</paramList>
+        </wheres>
+      <mappername>OrdCertiShip</mappername>
+      <tablename>ORD_CERTI_SHIP</tablename>
+    </selectParamRoot>
+  </xsl:template>
+</xsl:stylesheet>

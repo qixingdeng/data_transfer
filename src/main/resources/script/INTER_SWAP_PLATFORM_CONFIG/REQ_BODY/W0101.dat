@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet version="2.0"
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+   xmlns:fn="http://www.w3.org/2005/xpath-functions"
+   xmlns:xalan="http://xml.apache.org/xalan">
+  <xsl:output method="xml" version="1.0" encoding="gb2312" indent="no"/>
+  <xsl:strip-space elements="*"/>
+  <xsl:template match="/">
+    <xsl:variable name="serviceName" select="//smParamNode[@key = 'user']/@value"/>
+    <selectParamRoot>
+      <column>
+        <column>serviceName</column>
+        <column>servicePword</column>
+        <column>systemDesc</column>
+      </column>
+      <wheres>
+        <funcName>andServiceNameEqualTo</funcName>
+        <paramList>
+          <xsl:value-of select="$serviceName"/>
+        </paramList>
+      </wheres>
+      <wheres>
+        <funcName>andStatusEqualTo</funcName>
+        <paramList>0</paramList>
+      </wheres>
+      <mappername>InterSpcUserInfo</mappername>
+      <tablename>INTER_SPC_USERINFO</tablename>
+    </selectParamRoot>
+  </xsl:template>
+</xsl:stylesheet>

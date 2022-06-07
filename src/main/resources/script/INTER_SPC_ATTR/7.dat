@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet version="2.0"
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+   xmlns:fn="http://www.w3.org/2005/xpath-functions"
+   xmlns:xalan="http://xml.apache.org/xalan">
+  <xsl:output method="xml" version="1.0" encoding="gb2312" indent="no"/>
+  <xsl:strip-space elements="*"/>
+  <xsl:template match="/">
+    <xsl:param name="bookId" />
+    <xsl:variable name="shipId" select="//smParamNode[@id='OrdShipBaseInfo']/smParamNode/smParamNode[@key='shipId']/@value"/>
+    <xsl:variable name="busiOrdId" select="//smParamNode[@id='OrdShipBaseInfo']/smParamNode/smParamNode[@key='busiOrdId']/@value"/>
+    <selectParamRoot>
+       <column>
+        <column>busiOrdId</column>
+        <column>shipId</column>
+        <column>serviceType</column>
+        <column>infoId</column>
+        <column>bookId</column>
+        <column>busiType</column>
+         <column>certificateNo</column>
+         <column>expDate</column>
+          <column>operType</column>
+          <column>entNameChn</column>
+      </column>
+      
+        <wheres>
+          <funcName>andBusiOrdIdEqualTo</funcName>
+          <paramList>
+            <xsl:value-of select="$busiOrdId"/>
+          </paramList>
+        </wheres>
+     
+        <wheres>
+          <funcName>andShipIdEqualTo</funcName>
+          <paramList>
+            <xsl:value-of select="$shipId"/>
+          </paramList>
+        </wheres>
+      <wheres>
+          <funcName>andBookIdEqualTo</funcName>
+          <paramList>
+            <xsl:value-of select="$bookId"/>
+          </paramList>
+        </wheres>
+      <wheres>
+          <funcName>andOperTypeEqualTo</funcName>
+          <paramList>1</paramList>
+        </wheres>
+      <mappername>OrdCertificate</mappername>
+      <tablename>ORD_CERTIFICATE</tablename>
+    </selectParamRoot>
+  </xsl:template>
+</xsl:stylesheet>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet version="2.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:xalan="http://xml.apache.org/xalan">
+    <xsl:output method="xml" version="1.0" encoding="gb2312"
+        indent="no" />
+    <xsl:strip-space elements="*" />
+    <xsl:template match="/">
+        <xsl:variable name="rows"
+            select="//smParamNode[@id='OrdEntInfo']/smParamNode[not(@*)]" />
+        <xsl:variable name="pageinfo" select="//smParamNode[@id='OrdEntInfo']/smParamNode[@id='pageinfo']"/>
+            <respInfo>
+                 <resultconunt>
+                <xsl:value-of select="count($rows)"/>
+              </resultconunt>
+              <xsl:if test="count($pageinfo) !=0">
+                <pageInfo>
+                  <limit>
+                    <xsl:value-of select="$pageinfo/smParamNode[@key='limit']/@value"/>
+                  </limit>
+                  <page>
+                    <xsl:value-of select="$pageinfo/smParamNode[@key='page']/@value"/>
+                  </page>
+                  <totalcount>
+                    <xsl:value-of select="$pageinfo/smParamNode[@key='totalcount']/@value"/>
+                  </totalcount>
+                  <totalpages>
+                    <xsl:value-of select="$pageinfo/smParamNode[@key='totalpages']/@value"/>
+                  </totalpages>
+                </pageInfo>
+              </xsl:if>
+            <xsl:for-each select="$rows">
+                <entBaseInfoQueryForPortalresp>
+                    <ent_name_chn>
+                        <xsl:value-of select="./smParamNode[@key='entNameChn']/@value" />
+                    </ent_name_chn>
+                    <ent_name_en>
+                        <xsl:value-of select="./smParamNode[@key='entNameEn']/@value" />
+                    </ent_name_en>
+                    <economic_type>
+                        <xsl:value-of select="//smParamNode[@id='OrdEntInfo']//smParamNode[@key='typeParamDesc']/@value" />
+                    </economic_type>
+                    <regi_amount>
+                        <xsl:value-of select="./smParamNode[@key='regiAmount']/@value" />
+                    </regi_amount>
+                    <regi_addr_chn>
+                        <xsl:value-of select="./smParamNode[@key='regiAddrChn']/@value" />
+                    </regi_addr_chn>
+                    <contact_phone>
+                        <xsl:value-of select="./smParamNode[@key='contactPhone']/@value" />
+                    </contact_phone>
+                    <contact_fax>
+                        <xsl:value-of select="./smParamNode[@key='contactFax']/@value" />
+                    </contact_fax>
+                    <contact_email>
+                        <xsl:value-of select="./smParamNode[@key='contactEmail']/@value" />
+                    </contact_email>
+                    <biz_reg_no>
+                        <xsl:value-of select="./smParamNode[@key='bizRegNo']/@value" />
+                    </biz_reg_no>
+                    <legal_person_name>
+                        <xsl:value-of select="./smParamNode[@key='legalPersonName']/@value" />
+                    </legal_person_name>
+                </entBaseInfoQueryForPortalresp>
+            </xsl:for-each>
+        </respInfo>
+    </xsl:template>
+</xsl:stylesheet>

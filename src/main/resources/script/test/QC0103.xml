@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?> 
+<reqInfo>
+	<startStationName></startStationName>
+	<startStationZone></startStationZone>
+	<endStationName></endStationName>
+	<endStationZone></endStationZone>
+    <lineTransStation>张村</lineTransStation>
+    <pageInfo>
+        <page>1</page>
+    </pageInfo>
+</reqInfo>
